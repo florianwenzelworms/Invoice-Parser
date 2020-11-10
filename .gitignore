@@ -1,0 +1,7 @@
+__pycache__/
+build/
+dist/
+files/
+output/
+Vorlagen/
+test.py
