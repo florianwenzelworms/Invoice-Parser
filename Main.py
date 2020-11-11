@@ -1,9 +1,10 @@
 from tkinter import *
-from tkinter import ttk 
+from tkinter import ttk
+from tkinter import filedialog as fd  
 from json import loads, dumps
-import configparser
 import xmltodict
 import xlsxwriter
+import configparser
 import sys
 import os
 import timeit
@@ -34,17 +35,17 @@ def run():
             try:
                 new_file = test.create_file()
                 logger.info("Datei: "+ file +" wurde bearbeitet. Datei "+ new_file +" wurde erstellt")
-            except:
-                logger.debug("Fehler beim Bearbeiten der Datei: "+file)
+            except Exception as e:
+                logger.debug("Fehler: >>> " + str(e) + " <<< beim Bearbeiten der Datei: "+file)
             try:
                 test.cleanup()
             except Exception:
                 fails += 1
         erg = "Dateien Verarbeitet:" + str(len(files))+ "\nDavon fehlerhaft:"+ str(fails)+ "\nBenötigte Zeit: %.2f Sekunden" % (timeit.default_timer() - starttime) 
-        logger.info(erg.replace('\n',' |'))
+        logger.info(erg.replace('\n',' | '))
     else:
         erg = "Keine Dateien im Verzeichnis \n" + config["files"]["source_path"] + "\ngefunden."
-        logger.debug(erg.replace('\n',''))
+        logger.debug(erg.replace('\n',' '))
     # print output to "Ergebnis"-textfield
     e4.config(state=NORMAL)
     e4.delete(1.0, END)
@@ -57,11 +58,19 @@ def save():
     config["files"] = {}
     # puts "/" at the end of the path if it isn't there
     config["files"]["source_path"] = e1.get("1.0","end-1c")
-    if config["files"]["source_path"][-1] != "\\":
-        config["files"]["source_path"] += "\\"
+    if "\\" in config["files"]["source_path"]:
+        if config["files"]["source_path"][-1] != "\\":
+            config["files"]["source_path"] += "\\"
+    elif "/" in config["files"]["source_path"]:
+        if config["files"]["source_path"][-1] != "/":
+            config["files"]["source_path"] += "/"
     config["files"]["destination_path"] = e2.get("1.0","end-1c")
-    if config["files"]["destination_path"][-1] != "\\":
-        config["files"]["destination_path"] += "\\"
+    if "\\" in config["files"]["destination_path"]:
+        if config["files"]["destination_path"][-1] != "\\":
+            config["files"]["destination_path"] += "\\"
+    elif "/" in config["files"]["destination_path"]:
+        if config["files"]["destination_path"][-1] != "/":
+            config["files"]["destination_path"] += "/"
     config["usk"] = {}
     config["usk"]["USK_Liste"] = e3.get("1.0","end-1c")
     try:
@@ -127,38 +136,50 @@ def usk_list(data, entry_row, row, col):
 def usk_lock():
     # disables the USK textfield
     if lock.get() == True:
-        e1.config(state=DISABLED)
-        e2.config(state=DISABLED)
+        # e1.config(state=DISABLED)
+        # e2.config(state=DISABLED)
         e3.config(state=DISABLED)
     elif lock.get() == False :
-        e1.config(state=NORMAL)
-        e2.config(state=NORMAL)
+        # e1.config(state=NORMAL)
+        # e2.config(state=NORMAL)
         e3.config(state=NORMAL)
+
+def quellpfad():
+    path= fd.askdirectory() 
+    if path:
+        e1.delete(1.0,END)
+        e1.insert(10.0, path)
+
+def zielpfad():
+    path= fd.askdirectory() 
+    if path:
+        e2.delete(1.0,END)
+        e2.insert(10.0, path)
 
 
 # create logger
 logging.basicConfig(handlers=[logging.FileHandler(filename="./log.txt", 
                                                  encoding='utf-8', mode='a+')],
                     format="%(asctime)s - %(name)s - %(funcName)s - %(lineno)s - %(levelname)s - %(message)s",
-                    level=logging.INFO)
+                    level=logging.DEBUG)
 logger = logging.getLogger("Invoice Parser")
 
-
+# sets the veriables for the mainfunction
 config = configparser.ConfigParser()
 config.read("config.ini")
 output = ""
 erg = ""
 window = Tk()
 window.title("Invoice Parser - XML to XLSX")
-# window.geometry("800x530")
 lock = BooleanVar()
 lock.set(True)
-
-# Creates the images on the UI
-# temporarily removed because ugly
-# filename = PhotoImage(file="bg.gif")
-# background_label = ttk.Label(window, image=filename)
-# background_label.place(x=0, y=0, relwidth=1, relheight=1)
+row=0
+col=0
+try:
+    usk = loads(config["usk"]["usk_liste"])
+except:
+    usk = {}
+entry_row = {}
 
 # create UI level
 master = ttk.Frame(window)
@@ -177,8 +198,6 @@ e2 = Text(master, height=1, width=40)
 e3 = Text(master, height=10, width=40)
 e4 = Text(master, height= 4, width=40)
 
-refresh()
-
 # Aligns the Textobjects
 e1.grid(row=0, column=1, columnspan=2)
 e2.grid(row=1, column=1, columnspan=2)
@@ -187,21 +206,15 @@ e4.grid(row=3, column=1, columnspan=2)
 e4.config(state=DISABLED)
 
 # Buttons
-ttk.Button(master, text='Beenden', command=master.quit).grid(row=99, column=0, sticky=W, pady=4)
+ttk.Button(master, text='Wählen...', command=quellpfad).grid(row=0, column=3, sticky=W, pady=4)
+ttk.Button(master, text='Wählen...', command=zielpfad).grid(row=1, column=3, sticky=W, pady=4)
+ttk.Button(master, text='Beenden', command=master.quit).grid(row=99, column=3, sticky=W, pady=4)
 ttk.Button(master, text='Speichern', command=save).grid(row=99, column=1, sticky=W, pady=4)
-ttk.Button(master, text='Ausführen', command=run).grid(row=99, column=3, sticky=W, pady=4)
+ttk.Button(master, text='Ausführen', command=run).grid(row=99, column=0, sticky=W, pady=4)
 
 # Checkbox for activating/deactivating the USK textfield
-
 c = Checkbutton(master, text="Lock Settings", variable=lock, command=usk_lock).grid(row=99, column=2, sticky=W, pady=4)
 
-# sets the veriables for the mainfunction
-row=0
-col=0
-try:
-    usk = loads(config["usk"]["usk_liste"])
-except:
-    usk = {}
-entry_row = {}
 
+refresh()
 window.mainloop( )

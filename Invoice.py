@@ -1,13 +1,20 @@
+import xmltodict
+import xlsxwriter
+import os
+from json import loads, dumps
+import logging
+
 class Invoice:
 
     def __init__(self, file, config):
         self.filepath = config["files"]["source_path"]+file
         with open(self.filepath, "r", encoding="utf-8") as fd:
+            self.config = config
             self.doc = xmltodict.parse(fd.read())
             self.FileSender = self.doc["epay21Finance"]["PSPData"]["FileSender"]
             self.FileName = self.doc["epay21Finance"]["PSPData"]["FileName"]
             # self.OutputFile = config["files"]["destination_path"]+self.FileName.split(".")[0]+".xlsx"
-            self.OutputFile = config["files"]["destination_path"]+file.split(".")[0]+".xlsx"
+            self.OutputFile = config["files"]["destination_path"]+file.replace(".xml",".xlsx")
             self.FileTimestamp = self.doc["epay21Finance"]["PSPData"]["FileTimestamp"]
             self.PeriodFrom = self.doc["epay21Finance"]["PSPData"]["PeriodFrom"]
             self.PeriodTo = self.doc["epay21Finance"]["PSPData"]["PeriodTo"]
@@ -24,7 +31,7 @@ class Invoice:
         print(dumps(self.doc, indent=4, sort_keys=True))
 
     def get_USK(self, RecordEntry):
-        usk_config = loads(config["usk"]["usk_liste"].replace("\'","\""))
+        usk_config = loads(self.config["usk"]["usk_liste"].replace("\'","\""))
         usk = usk_config[RecordEntry["epay21App"]]
         if RecordEntry["epay21App"] == "hsh.olav":
             usk = usk_config["hsh.olav"][RecordEntry["Purpose"].split("/")[0]]
