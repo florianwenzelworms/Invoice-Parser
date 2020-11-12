@@ -44,12 +44,15 @@ Anschließend werden Informationen zum Ausgang des Prozesses angezeigt
 
 ### Ergebnis
 ![Doku.png](https://github.com/florianwenzelworms/Invoice-Parser/blob/main/docs/doc2.png?raw=true)
+
 Dateien wurden ohne Fehler bearbeitet
 
 ![Doku.png](https://github.com/florianwenzelworms/Invoice-Parser/blob/main/docs/doc3.png?raw=true)
+
 Quellordner war leer. Falscher Ordner angegeben oder schon alle Dateien bearbeitet?
 
 ![Doku.png](https://github.com/florianwenzelworms/Invoice-Parser/blob/main/docs/doc4.png?raw=true)
+
 Es gab fehlerhafte Dateien bei der Bearbeitung. Möglicherweise gibt die Log-Datei Aufschluss über gegebenenfalls aufgetretene Fehler.
 
 ### Fehler
