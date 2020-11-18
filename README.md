@@ -32,7 +32,7 @@ Parses Invoices from .xml to .xlsx
 ### Bedienung
 *Quellpfad*: Hier den Pfad einfügen, der auf den Ordner verweist, in dem die .XML Dateien liegen.
 
-*Zielpfad*: Hier den Pfad zu dem Ordner einfügen, in den die Bearbeiteten .xlsx Dateien abgespeichert werden sollen.
+*Zielpfad*: Hier den Pfad zu dem Ordner einfügen, in den die bearbeiteten .xlsx Dateien abgespeichert werden sollen.
 
 *USK*: Die vorkommenden Untersachkonten sind im JSON Format abgespeichert. Die richtige Formatierung ist wichtig, sonst können die Rechnungen nicht bearbeitet werden. Die geschweiften Klammern müssen sich am Anfang und Ende befinden.
 Um die Untersachkonten zu bearbeiten, muss der Haken bei *Lock-Settings* entfernt werden. Dies verhindert ein versehentliches Löschen oder Bearbeiten des Feldes. 

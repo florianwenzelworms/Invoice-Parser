@@ -27,6 +27,7 @@ class Invoice:
             self.columns = ["Verfahren", "USK", "Betrag", "Währung", "Einzahler", "Verwendungszweck", "Zeitstempel", "Bezahlmethode"]
             self.RecordEntry = self.doc["epay21Finance"]["Records"]["RecordEntry"]
 
+    # Form debugging purposes
     def pprint(self):
         print(dumps(self.doc, indent=4, sort_keys=True))
 
