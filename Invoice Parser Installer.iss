@@ -38,6 +38,9 @@ Source: "C:\Users\wenzelf\Documents\invoice\dist\Invoice Parser\Main.exe"; DestD
 Source: "C:\Users\wenzelf\Documents\invoice\dist\Invoice Parser\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
+[InstallDelete]
+Name: "{app}\Main.exe"; Type: files
+
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
