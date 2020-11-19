@@ -35,7 +35,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "C:\Users\wenzelf\Documents\invoice\dist\Invoice Parser\Main.exe"; DestDir: "{app}\"; DestName: "Invoice Parser.exe"; Flags: ignoreversion
-Source: "C:\Users\wenzelf\Documents\invoice\dist\Invoice Parser\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\wenzelf\Documents\invoice\dist\Invoice Parser\*"; Excludes: "Main.exe"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [InstallDelete]
