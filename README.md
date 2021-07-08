@@ -3,6 +3,11 @@ Parses Invoices from .xml to .xlsx
 
 
 ## Changelog
+### 1.4
+- Add: Archivefunction. Processed files do not get deleted anymore, they get moved to "files/Archive" instead
+- Fix: Bug removed when no "Purose" is available
+
+
 ### 1.3
 - Add: Ordnersuche für Pfadauswahl.
 - Rearrange: Buttons 
