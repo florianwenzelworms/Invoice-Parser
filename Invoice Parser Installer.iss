@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Invoice Parser"
-#define MyAppVersion "1.2"
+#define MyAppVersion "1.3"
 #define MyAppPublisher "Stadtverwaltung Worms"
 #define MyAppURL "https://www.worms.de"
 #define MyAppExeName "Invoice Parser.exe"
@@ -34,8 +34,8 @@ Name: "german"; MessagesFile: "compiler:Languages\German.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Users\wenzelf\Documents\invoice\dist\Invoice Parser\Main.exe"; DestDir: "{app}\"; DestName: "Invoice Parser.exe"; Flags: ignoreversion
-Source: "C:\Users\wenzelf\Documents\invoice\dist\Invoice Parser\*"; Excludes: "Main.exe"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\wenzelf\Documents\Projekte\Invoice-Parser\dist\Main\Main.exe"; DestDir: "{app}\"; DestName: "Invoice Parser.exe"; Flags: ignoreversion
+Source: "C:\Users\wenzelf\Documents\Projekte\Invoice-Parser\dist\Main\*"; Excludes: "Main.exe"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [InstallDelete]

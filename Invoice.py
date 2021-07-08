@@ -3,11 +3,14 @@ import xlsxwriter
 import os
 from json import loads, dumps
 import logging
+import shutil
 
 class Invoice:
 
     def __init__(self, file, config):
         self.filepath = config["files"]["source_path"]+file
+        self.source_path = config["files"]["source_path"]
+        self.file=file
         with open(self.filepath, "r", encoding="utf-8") as fd:
             self.config = config
             self.doc = xmltodict.parse(fd.read())
@@ -107,10 +110,12 @@ class Invoice:
 
     def cleanup(self):
         if os.path.isfile(self.OutputFile) and os.stat(self.OutputFile).st_size > 0:
-            return True
             try:
-                os.move(self.filepath+"/Archiv/")
-            except:
-                logger.debug(sys.exec_info()[0])
+                if not os.path.isdir(self.source_path+"/Archiv/"):
+                    os.mkdir(self.source_path+"/Archiv/")
+                shutil.move(self.filepath, self.source_path+"/Archiv/"+self.file)
+            except Exception as e:
+                print(e)
+                # logger.debug(sys.exec_info()[0])
         else:
             raise Exception("Fehler beim bearbeiten der Datei: "+self.filepath.split("/")[-1])
