@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Invoice Parser"
-#define MyAppVersion "1.3"
+#define MyAppVersion "1.4"
 #define MyAppPublisher "Stadtverwaltung Worms"
 #define MyAppURL "https://www.worms.de"
 #define MyAppExeName "Invoice Parser.exe"
