@@ -83,9 +83,13 @@ class Invoice:
         row = 1
         if type(self.RecordEntry) is list:
             for entry in self.RecordEntry:
+                if "Purpose" not in entry:
+                    entry["Purpose"] = "n/v"
                 self.create_table(sheet2, row, entry)
                 row += 1
         else:
+            if "Purpose" not in self.RecordEntry:
+                    self.RecordEntry["Purpose"] = "n/v"
             self.create_table(sheet2, row, self.RecordEntry)
 
         sheet1.set_column(0, 0, 15)
@@ -103,8 +107,9 @@ class Invoice:
 
     def cleanup(self):
         if os.path.isfile(self.OutputFile) and os.stat(self.OutputFile).st_size > 0:
+            return True
             try:
-                os.remove(self.filepath)
+                os.move(self.filepath+"/Archiv/")
             except:
                 logger.debug(sys.exec_info()[0])
         else:
