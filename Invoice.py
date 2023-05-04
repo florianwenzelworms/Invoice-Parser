@@ -39,6 +39,8 @@ class Invoice:
         usk = usk_config[RecordEntry["epay21App"]]
         if RecordEntry["epay21App"] == "hsh.olav":
             usk = usk_config["hsh.olav"][RecordEntry["Purpose"].split("/")[0]]
+        if RecordEntry["epay21App"] == "civento":
+            usk = usk_config["civento"][RecordEntry["Purpose"].split("-")[0]]
         return usk
 
     def create_table(self,sheet, row, RecordEntry):
