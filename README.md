@@ -3,6 +3,10 @@ Parses Invoices from .xml to .xlsx
 
 
 ## Changelog
+### 1.6
+- Fix: Fehler bei fehlender PayerInfo behoben
+
+
 ### 1.5
 - Fix: Civento Zahlungen können nun wie hsh.olav behandelt werden
 
