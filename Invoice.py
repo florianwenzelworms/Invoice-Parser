@@ -90,11 +90,15 @@ class Invoice:
             for entry in self.RecordEntry:
                 if "Purpose" not in entry:
                     entry["Purpose"] = "n/v"
+                if "PayerInfo" not in entry:
+                    entry["PayerInfo"] = "n/v"
                 self.create_table(sheet2, row, entry)
                 row += 1
         else:
             if "Purpose" not in self.RecordEntry:
-                    self.RecordEntry["Purpose"] = "n/v"
+                self.RecordEntry["Purpose"] = "n/v"
+            if "PayerInfo" not in self.RecordEntry:
+                self.RecordEntry["PayerInfo"] = "n/v"
             self.create_table(sheet2, row, self.RecordEntry)
 
         sheet1.set_column(0, 0, 15)
